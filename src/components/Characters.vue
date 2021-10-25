@@ -13,11 +13,6 @@ export default {
 
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      console.log('beforeROuterEnter char component', vm)
-    })
-  },
   computed: {
     ...mapState({
       characters: state => state.characters

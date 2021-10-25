@@ -2,7 +2,11 @@
   <div class="browse-characters">
     <router-link to="/">Home</router-link>
     <Characters></Characters>
-    <ChangePage @previous-page="previousPage" @next-page="nextPage"></ChangePage>
+    <ChangePage @previous-page="previousPage"
+                @next-page="nextPage"
+                @previous-page-jump="previousPageJump"
+                @next-page-jump="nextPageJump"
+    ></ChangePage>
   </div>
 </template>
 
@@ -33,10 +37,22 @@ export default {
     nextPage(page) {
       console.log('push to new url', page)
       this.getCharacters(page)
+      this.$router.push({name: 'Characters', params: {id: page}})
+    },
+    nextPageJump(page) {
+      console.log('push to new url', page)
+      this.getCharacters(page)
+      this.$router.push({name: 'Characters', params: {id: page}})
     },
     previousPage(page) {
       console.log('push to new url', page)
       this.getCharacters(page)
+      this.$router.push({name: 'Characters', params: {id: page}})
+    },
+    previousPageJump(page) {
+      console.log('push to new url', page)
+      this.getCharacters(page)
+      this.$router.push({name: 'Characters', params: {id: page}})
     },
     async getCharacters(page) {
       const res = await this.$apollo.query({
@@ -47,7 +63,6 @@ export default {
         update: data => data.characters
       })
       await this.$store.dispatch('getPage', res.data.characters)
-
     }
   }
 }
