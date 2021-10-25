@@ -2,56 +2,52 @@
   <div class="browse-characters">
     <router-link to="/">Home</router-link>
     <Characters></Characters>
-    <ChangePage @receive-id="receiveId"></ChangePage>
+    <ChangePage @previous-page="previousPage" @next-page="nextPage"></ChangePage>
   </div>
 </template>
 
 <script>
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
-import gql from 'graphql-tag'
+import CHARACTERS from "@/graphql/characters";
+import {mapState} from "vuex";
 export default {
   name: 'BrowseChars',
   components: {Characters, ChangePage},
   data() {
     return {
+      characters: {},
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log('beforeRouterEnter')
-    next(async vm => {
-      const res = await vm.$apollo.query({query: gql`query getCharactersByPage($page: Int!){
-          characters(page: $page) {
-            info {
-              pages
-              count
-              next
-              prev
-            },
-            results {
-              id
-              name
-              image
-              status
-              species
-              origin {
-                id
-                name
-                dimension
-              }
-            }
-          }
-        }`,
-        variables: {
-            page: parseInt(vm.$route.params.id)
-        }
-      })
-      await vm.$store.dispatch('getPage', res.data.characters)
+    next(vm => {
+      vm.getCharacters(vm.$route.params.id)
+    })
+  },
+  computed: {
+    ...mapState({
+      page: state => state.page
     })
   },
   methods: {
-    receiveId(id) {
-      this.$router.push({name: 'Characters', params: {id: id}})
+    nextPage(page) {
+      console.log('push to new url', page)
+      this.getCharacters(page)
+    },
+    previousPage(page) {
+      console.log('push to new url', page)
+      this.getCharacters(page)
+    },
+    async getCharacters(page) {
+      const res = await this.$apollo.query({
+        query: CHARACTERS,
+          variables:{
+            page: parseInt(page)
+          },
+        update: data => data.characters
+      })
+      await this.$store.dispatch('getPage', res.data.characters)
+
     }
   }
 }

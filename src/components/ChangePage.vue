@@ -2,7 +2,7 @@
   <div class="wrap flex justify-center py-4">
     <div class="flex w-1/3 justify-between">
       <button>-5</button>
-      <button>-1</button>
+      <button @click="minusOne">-1</button>
       <button>{{ actualPage }}</button>
       <button @click="plusOne">+1</button>
       <button>+5</button>
@@ -21,8 +21,11 @@ export default {
     })
   },
   methods: {
+    minusOne() {
+      this.$emit('previous-page', this.$store.state.info.prev)
+    },
     plusOne() {
-      this.$emit('receive-id', 5)
+      this.$emit('next-page', this.$store.state.info.next)
     }
   }
 }
