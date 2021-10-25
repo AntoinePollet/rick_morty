@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 class="text-left">
+      Welcome, this web app allows you to discover characters that you may
+      have missed in Rick and Morty, to filter them by gender, names and more !
+    </h1>
+    <div class="browse flex flex-col">
+      <router-link :to="{name: 'Characters', params: {id: 1}}">Browse Characters</router-link>
+      <router-link :to="{name: 'Episodes'}">Browse Episodes</router-link>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  components: {},
+  data() {
+    return {
+    }
+  },
+  created() {
+
+  },
+  computed: {
   }
 }
 </script>
