@@ -25,7 +25,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.getCharacters(vm.$route.params.id)
+      vm.getCharacters(vm.$route.params.id);
     })
   },
   computed: {
@@ -35,24 +35,20 @@ export default {
   },
   methods: {
     nextPage(page) {
-      console.log('push to new url', page)
-      this.getCharacters(page)
-      this.$router.push({name: 'Characters', params: {id: page}})
+      this.getCharacters(page);
+      this.$router.push({name: 'Characters', params: {id: page}});
     },
     nextPageJump(page) {
-      console.log('push to new url', page)
-      this.getCharacters(page)
-      this.$router.push({name: 'Characters', params: {id: page}})
+      this.getCharacters(page);
+      this.$router.push({name: 'Characters', params: {id: page}});
     },
     previousPage(page) {
-      console.log('push to new url', page)
-      this.getCharacters(page)
-      this.$router.push({name: 'Characters', params: {id: page}})
+      this.getCharacters(page);
+      this.$router.push({name: 'Characters', params: {id: page}});
     },
     previousPageJump(page) {
-      console.log('push to new url', page)
-      this.getCharacters(page)
-      this.$router.push({name: 'Characters', params: {id: page}})
+      this.getCharacters(page);
+      this.$router.push({name: 'Characters', params: {id: page}});
     },
     async getCharacters(page) {
       const res = await this.$apollo.query({
@@ -62,7 +58,7 @@ export default {
           },
         update: data => data.characters
       })
-      await this.$store.dispatch('getPage', res.data.characters)
+      await this.$store.dispatch('getPage', res.data.characters);
     }
   }
 }
