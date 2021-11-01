@@ -1,6 +1,7 @@
 <template>
   <div v-for="character in characters" :key="character.id">
     {{character.name}}
+    {{character.species}}
   </div>
 </template>
 
