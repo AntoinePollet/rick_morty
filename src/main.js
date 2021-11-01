@@ -5,6 +5,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './index.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleDown, faAngleUp)
 
 const cache = new InMemoryCache()
 
@@ -18,4 +23,4 @@ const apolloProvider = createApolloProvider({
 })
 
 
-createApp(App).use(store).use(router).use(apolloProvider).mount('#app')
+createApp(App).use(store).use(router).use(apolloProvider).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

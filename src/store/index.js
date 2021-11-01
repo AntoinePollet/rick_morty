@@ -1,21 +1,27 @@
 import { createStore } from 'vuex'
-//import gql from "graphql-tag";
 
 export default createStore({
   state: {
     page: 1,
     info: {},
-    characters: {}
+    characters: {},
+    character: {}
   },
   mutations: {
     GET_PAGE(state, res) {
       state.info = res.info;
       state.characters = res.results;
+    },
+    CHARACTER_INFOS(state, res) {
+      state.character = res
     }
   },
   actions: {
     async getPage(context, res) {
-      context.commit('GET_PAGE', res);
+      await context.commit('GET_PAGE', res);
+    },
+    async characterInfos({commit}, res) {
+      await commit('CHARACTER_INFOS', res)
     }
   },
   modules: {

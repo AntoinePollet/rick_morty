@@ -1,19 +1,19 @@
 <template>
   <div class="wrap flex justify-center py-4">
     <div class="flex w-1/3 justify-between">
-      <button @click="minusFive" :disabled="$route.params.id < 6">-5</button>
+      <button @click="minusFive" :disabled="$route.params.id < 6">
+        <font-awesome-icon :icon="['fas', 'angle-double-left']" />
+      </button>
       <button @click="minusOne" :disabled="$route.params.id == 1">
-        <span class="material-icons">
-        arrow_back_ios
-        </span>
+        <font-awesome-icon :icon="['fas', 'angle-left']" />
       </button>
       <button >{{ $route.params.id }}</button>
       <button @click="plusOne" :disabled="$route.params.id == finalPage">
-        <span class="material-icons">
-        arrow_forward_ios
-        </span>
+        <font-awesome-icon :icon="['fas', 'angle-right']" />
       </button>
-      <button @click="plusFive" :disabled="$route.params.id > (finalPage -5)">+5</button>
+      <button @click="plusFive" :disabled="$route.params.id > (finalPage -5)">
+        <font-awesome-icon :icon="['fas', 'angle-double-right']" />
+      </button>
     </div>
   </div>
 </template>
@@ -25,7 +25,6 @@ export default {
   name: 'changePage',
   computed: {
     ...mapState({
-      actualPage: state => state.page,
       finalPage: state => state.info.pages
     })
   },

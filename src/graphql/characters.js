@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-const CHARACTERS = gql`query getChar($page: Int!){
+const CHARACTERS = gql`query charactersByPage($page: Int!){
   characters(page: $page) {
     info {
       pages

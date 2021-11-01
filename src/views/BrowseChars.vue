@@ -14,7 +14,7 @@
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
 import CHARACTERS from "@/graphql/characters";
-import {mapState} from "vuex";
+//import {mapState} from "vuex";
 export default {
   name: 'BrowseChars',
   components: {Characters, ChangePage},
@@ -29,9 +29,9 @@ export default {
     })
   },
   computed: {
-    ...mapState({
-      page: state => state.page
-    })
+    // ...mapState({
+    //   page: state => state.page
+    // })
   },
   methods: {
     nextPage(page) {
@@ -53,9 +53,9 @@ export default {
     async getCharacters(page) {
       const res = await this.$apollo.query({
         query: CHARACTERS,
-          variables:{
-            page: parseInt(page)
-          },
+        variables:{
+          page: parseInt(page)
+        },
         update: data => data.characters
       })
       await this.$store.dispatch('getPage', res.data.characters);
