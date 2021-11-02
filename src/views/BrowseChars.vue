@@ -1,6 +1,5 @@
 <template>
   <div class="browse-characters">
-    <router-link to="/">Home</router-link>
     <Characters></Characters>
     <ChangePage @previous-page="previousPage"
                 @next-page="nextPage"

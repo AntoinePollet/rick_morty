@@ -1,5 +1,5 @@
 <template>
-  <div v-if="character" class="m-3 py-7 bg-red-200">
+  <div v-if="character" class="m-3 py-7 bg-green-100">
     <div class="flex flex-col md:flex-row">
       <div class="">
         <img class="rounded-full" height="175" width="175" :src="character.image" :alt="character.name"/>

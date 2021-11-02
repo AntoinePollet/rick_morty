@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-link :to="{name: 'Characters', params: {id: 1}}">back to characters selection</router-link>
     <Character></Character>
   </div>
 </template>
