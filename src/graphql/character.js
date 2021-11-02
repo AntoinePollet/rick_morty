@@ -14,6 +14,12 @@ const CHARACTER = gql`query characterById($id: ID!){
         type
         dimension
       }
+      episode {
+        id
+        name
+        air_date
+        episode
+      }
       location {
         name
         type

@@ -1,11 +1,11 @@
 <template>
-  <div v-if="character" class="m-3 bg-red-200">
+  <div v-if="character" class="m-3 py-7 bg-red-200">
     <div class="flex flex-col md:flex-row">
-      <div class="py-5">
+      <div class="">
         <img class="rounded-full" height="175" width="175" :src="character.image" :alt="character.name"/>
       </div>
       <div class="py-5 flex items-center flex-col">
-        <p>This is <span class="highlight">{{character?.name}}</span> and I am located on</p>
+        <p>This is <span class="highlight">{{character?.name}}</span>, located on</p>
         <p class="highlight">
           {{character?.location?.type}} {{character?.location?.name}}
         </p>
@@ -14,22 +14,33 @@
     <div>
       <div class="text-left ml-4 my-4">
         <p class="cursor-pointer" @click="showOrigin = !showOrigin">
-          Where is {{ character.name }} originally from ?
           <font-awesome-icon :icon="['fas', isTrue(showOrigin)]"/>
+          Where is {{ character.name }} originally from ?
         </p>
-        <div v-if="showOrigin" class="ml-4">
-          <p>{{knownOrigin(character.origin)}}</p>
-        </div>
+        <ul v-if="showOrigin">
+          <li class="">{{knownOrigin(character.origin)}}</li>
+        </ul>
+      </div>
+      <div class="text-left ml-4 my-4">
+        <p class="cursor-pointer" @click="showEpisodes = !showEpisodes">
+          <font-awesome-icon :icon="['fas', isTrue(showEpisodes)]"/>
+          Wanna see every episodes where {{character.name}} is ?
+        </p>
+        <ul v-if="showEpisodes">
+          <li v-for="episode in character.episode" :key="episode.id">
+            {{episode.name}} - {{episode.episode}}
+          </li>
+        </ul>
       </div>
       <div class="text-left ml-4 my-4">
         <div>
           <p class="cursor-pointer" @click="showResidents = !showResidents">
-            See every residents of {{character?.location?.name}}
             <font-awesome-icon :icon="['fas', isTrue(showResidents)]"/>
+            See every residents of {{character?.location?.name}}
           </p>
           <div v-if="showResidents">
             <template v-for="resident in character?.location?.residents" :key="resident.id">
-              <img :src="resident.image" class="rounded-full w-1/5 p-2" :alt="resident.name"/>
+              <img :src="resident.image" class="rounded-full w-1/5 md:w-1/12 p-2" :alt="resident.name"/>
             </template>
           </div>
         </div>
@@ -49,9 +60,9 @@ export default {
   name: "CharacterInfosComponent",
   data() {
     return {
-      showLocation: false,
       showOrigin: false,
-      showResidents: false
+      showResidents: false,
+      showEpisodes: false
     }
   },
   computed: {
@@ -61,10 +72,10 @@ export default {
   },
   methods: {
     isTrue(bool) {
-      return bool ? 'angle-down' : 'angle-up'
+      return bool ? 'angle-down' : 'angle-right'
     },
     knownOrigin(origin) {
-      return origin.name !== 'unknown' ? `${origin.type} ${origin.name} ` : 'unknown origin'
+      return origin.name !== 'unknown' ? `${origin.type} ${origin.name}` : 'unknown origin'
     }
   }
 }
