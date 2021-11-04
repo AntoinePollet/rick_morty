@@ -12,11 +12,22 @@
 </template>
 
 <script>
+import EPISODES_COUNT from "@/graphql/episodesCount";
+
 export default {
   name: 'Home',
   components: {},
-  data() {
-    return {
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.episodesCount()
+    })
+  },
+  methods: {
+    async episodesCount() {
+      const res = await this.$apollo.query({
+        query: EPISODES_COUNT
+      })
+      this.$store.dispatch('episodesCount', res.data)
     }
   },
   computed: {
