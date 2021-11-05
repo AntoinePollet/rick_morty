@@ -38,6 +38,12 @@ export default {
 
 <style lang="scss">
 .header-link {
+  &:hover {
+    border-bottom: white solid 1px;
+  }
   @apply no-underline text-white font-medium
+}
+.router-link-active {
+  border-bottom: white solid 1px;
 }
 </style>

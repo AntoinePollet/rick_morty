@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="w-1/3" v-for="episode in episodes" :key="episode.id">
-      {{episode.name}}
+    <div @click="showModal" class="text-left p-4 bg-opacity-75 bg-green-200 even:bg-green-50 hover:bg-opacity-100 cursor-pointer " v-for="episode in episodes" :key="episode.id">
+      <p>{{episode.episode}} - {{episode.name}}</p>
+      <p>{{episode.air_date}}</p>
     </div>
   </div>
 </template>
@@ -15,6 +16,11 @@ export default {
     ...mapState({
       episodes: state => state.episodes
     })
+  },
+  methods: {
+    showModal() {
+      this.dialog = true
+    }
   }
 }
 </script>

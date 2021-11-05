@@ -1,6 +1,7 @@
 <template>
   <div>
     <Episode></Episode>
+    <EpisodeInfosModal :dialog="dialog"></EpisodeInfosModal>
   </div>
 </template>
 
@@ -8,9 +9,16 @@
 import EPISODES from "@/graphql/episodes";
 import {mapState} from "vuex";
 import Episode from '@/components/Episode'
+import EpisodeInfosModal from "@/components/EpisodeInfosModal"
+
 export default {
   name: 'BrowseEpisodes',
-  components: {Episode},
+  components: {Episode, EpisodeInfosModal},
+  data() {
+    return {
+      dialog: true
+    }
+  },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getEpisodes()
