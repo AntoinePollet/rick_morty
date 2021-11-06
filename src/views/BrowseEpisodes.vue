@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Episode></Episode>
-    <EpisodeInfosModal :dialog="dialog"></EpisodeInfosModal>
+    <Episode @open-dialog="openDialog"></Episode>
+    <EpisodeInfosModal :dialog="dialog" :episode="episode" @close-dialog="closeDialog"></EpisodeInfosModal>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
   components: {Episode, EpisodeInfosModal},
   data() {
     return {
-      dialog: false
+      dialog: false,
+      episode: {}
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -44,6 +45,13 @@ export default {
       })
 
       await this.$store.dispatch('episodes', res.data)
+    },
+    closeDialog(bool) {
+      this.dialog = bool
+    },
+    openDialog(episode) {
+      this.dialog = true;
+      this.episode = episode
     }
   }
 }

@@ -40,7 +40,7 @@
           </p>
           <div v-if="showResidents">
             <template v-for="resident in character?.location?.residents" :key="resident.id">
-              <img :src="resident.image" class="rounded-full w-1/5 md:w-1/12 p-2" :alt="resident.name"/>
+              <img :src="resident.image" @click="$router.push({name: 'Character', params: {id :resident.id}})" class="rounded-full w-1/5 md:w-1/12 p-2 cursor-pointer" :alt="resident.name"/>
             </template>
           </div>
         </div>

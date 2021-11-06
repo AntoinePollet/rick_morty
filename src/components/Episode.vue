@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="showModal" class="text-left p-4 bg-opacity-75 bg-green-200 even:bg-green-50 hover:bg-opacity-100 cursor-pointer " v-for="episode in episodes" :key="episode.id">
+    <div @click="openDialog(episode)" class="text-left p-4 bg-opacity-75 bg-green-200 even:bg-green-50 hover:bg-opacity-100 cursor-pointer " v-for="episode in episodes" :key="episode.id">
       <p>{{episode.episode}} - {{episode.name}}</p>
       <p>{{episode.air_date}}</p>
     </div>
@@ -18,8 +18,8 @@ export default {
     })
   },
   methods: {
-    showModal() {
-      this.dialog = true
+    openDialog(episode) {
+      this.$emit('open-dialog', episode);
     }
   }
 }

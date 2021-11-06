@@ -6,6 +6,11 @@ const EPISODES = gql(`query episodes($ids: [ID!]!){
         name
         air_date
         episode  
+        characters {
+            id
+            name
+            image
+        }
     }
 }`)
 

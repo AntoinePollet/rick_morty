@@ -6,7 +6,7 @@
         <div class="flex justify-center mt-3">
           <img :src="character.image" height="80" width="80" class="rounded-full" :alt="character.name"/>
         </div>
-        <p>{{character.name}}</p>
+        <p class="py-2">{{character.name}}</p>
       </div>
     </div>
   </div>
