@@ -16,7 +16,7 @@ export default {
   components: {Episode, EpisodeInfosModal},
   data() {
     return {
-      dialog: true
+      dialog: false
     }
   },
   beforeRouteEnter(to, from, next) {
