@@ -23,6 +23,10 @@ export default createStore({
     },
     EPISODES(state, res) {
       state.episodes = res
+    },
+    CHARACTERS_FILTERED(state, res) {
+      state.info = res.info;
+      state.characters = res.results;
     }
   },
   actions: {
@@ -37,6 +41,10 @@ export default createStore({
     },
     episodes({commit}, res) {
       commit('EPISODES', res.episodesByIds)
+    },
+    charactersFiltered({commit}, res) {
+      console.log(res);
+      commit('CHARACTERS_FILTERED', res)
     }
   },
   modules: {

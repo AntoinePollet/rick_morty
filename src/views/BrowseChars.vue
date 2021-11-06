@@ -1,5 +1,6 @@
 <template>
   <div class="browse-characters">
+    <FilterByParams></FilterByParams>
     <Characters></Characters>
     <ChangePage @previous-page="previousPage"
                 @next-page="nextPage"
@@ -12,10 +13,11 @@
 <script>
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
+import FilterByParams from "@/components/FilterByParams";
 import CHARACTERS from "@/graphql/characters";
 export default {
   name: 'BrowseChars',
-  components: {Characters, ChangePage},
+  components: {Characters, ChangePage, FilterByParams},
   data() {
     return {
       characters: {},

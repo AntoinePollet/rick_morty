@@ -3,8 +3,8 @@
     <div class="flex flex-col rounded-xl p-5 bg-white ">
       <div class="flex justify-between w-full">
         <p>{{episode.episode}} - {{episode.name}}</p>
-        <div>
-            <font-awesome-icon :icon="['fa', 'times']" @click="closeDialog" class="cursor-pointer" size="lg"></font-awesome-icon>
+        <div @click="closeDialog" class="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+            <font-awesome-icon :icon="['fa', 'times']" size="lg"></font-awesome-icon>
         </div>
       </div>
       <div class="my-2">
