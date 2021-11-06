@@ -29,8 +29,6 @@ export default {
       })
       this.$store.dispatch('episodesCount', res.data)
     }
-  },
-  computed: {
   }
 }
 </script>

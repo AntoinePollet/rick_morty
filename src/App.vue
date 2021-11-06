@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <router-view :key="$route.params"/>
+  <router-view :key="$route.fullPath"/>
 </template>
 
 <script>

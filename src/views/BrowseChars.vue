@@ -13,7 +13,6 @@
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
 import CHARACTERS from "@/graphql/characters";
-//import {mapState} from "vuex";
 export default {
   name: 'BrowseChars',
   components: {Characters, ChangePage},
@@ -26,11 +25,6 @@ export default {
     next(vm => {
       vm.getCharacters(vm.$route.params.id);
     })
-  },
-  computed: {
-    // ...mapState({
-    //   page: state => state.page
-    // })
   },
   methods: {
     nextPage(page) {

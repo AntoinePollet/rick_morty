@@ -21,6 +21,10 @@ export default {
       vm.characterInfos(vm.$route.params.id)
     })
   },
+  beforeRouteUpdate(to, from, next) {
+    this.characterInfos(to.params.id)
+    next()
+  },
   methods: {
     async characterInfos(id) {
       const res = await this.$apollo.query({
