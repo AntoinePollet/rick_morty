@@ -21,8 +21,8 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.getEpisodes()
+    next(async vm => {
+      await vm.$store.dispatch('episodes')
     })
   },
   computed: {
@@ -31,21 +31,6 @@ export default {
     })
   },
   methods: {
-    async getEpisodes() {
-      const count = localStorage.getItem('episodesCount')
-      let destructuredEpisodesCount = [];
-      for(let i = 1; i <= count; i++) {
-        destructuredEpisodesCount.push(i)
-      }
-      const res = await this.$apollo.query({
-        query: EPISODES,
-        variables: {
-          ids: destructuredEpisodesCount
-        }
-      })
-
-      await this.$store.dispatch('episodes', res.data)
-    },
     closeDialog(bool) {
       this.dialog = bool
     },

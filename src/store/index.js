@@ -1,4 +1,9 @@
 import { createStore } from 'vuex'
+import { apolloClient } from '@/apollo'
+import CHARACTERS from "@/graphql/characters";
+import EPISODES_COUNT from "@/graphql/episodesCount";
+import EPISODES from "@/graphql/episodes";
+import CHARACTER from "@/graphql/character";
 
 export default createStore({
   state: {
@@ -7,13 +12,14 @@ export default createStore({
     info: {},
     characters: {},
     character: {},
-    episodes: {}
+    episodes: {},
+    filter: {
+      name: "",
+      gender: "Gender",
+      status: "Status"
+    }
   },
   mutations: {
-    GET_PAGE(state, res) {
-      state.info = res.info;
-      state.characters = res.results;
-    },
     CHARACTER_INFOS(state, res) {
       state.character = res
     },
@@ -27,24 +33,65 @@ export default createStore({
     CHARACTERS_FILTERED(state, res) {
       state.info = res.info;
       state.characters = res.results;
+    },
+    STORE_FILTER(state, filter) {
+      state.filter = filter
+    },
+    CHARACTERS_BY_PAGE(state, res) {
+      state.info = res.info;
+      state.characters = res.results;
     }
   },
   actions: {
     async getPage(context, res) {
       await context.commit('GET_PAGE', res);
     },
-    async characterInfos({commit}, res) {
-      await commit('CHARACTER_INFOS', res)
+    async characterInfos({commit}, id) {
+      const res = await apolloClient.query({
+        query: CHARACTER,
+        variables: {
+          id: parseInt(id)
+        }
+      })
+      commit('CHARACTER_INFOS', res.data.character)
     },
-    episodesCount({commit}, res) {
-      commit('EPISODES_COUNT', res.episodes.info)
+    async episodesCount({commit}) {
+      const res = await apolloClient.query({
+        query: EPISODES_COUNT
+      })
+      commit('EPISODES_COUNT', res.data.episodes.info)
     },
-    episodes({commit}, res) {
-      commit('EPISODES', res.episodesByIds)
+    async episodes({commit}) {
+      const count = localStorage.getItem('episodesCount')
+      let destructuredEpisodesCount = [];
+      for(let i = 1; i <= count; i++) {
+        destructuredEpisodesCount.push(i)
+      }
+      const res = await apolloClient.query({
+        query: EPISODES,
+        variables: {
+          ids: destructuredEpisodesCount
+        }
+      })
+      commit('EPISODES', res.data.episodesByIds)
     },
     charactersFiltered({commit}, res) {
       console.log(res);
       commit('CHARACTERS_FILTERED', res)
+    },
+    async storeFilter({commit}, filter) {
+      //console.log(apolloClient)
+      console.log(filter)
+      commit('STORE_FILTER', filter)
+    },
+    async CharactersByPage({commit}, id) {
+      const res = await apolloClient.query({
+        query: CHARACTERS,
+        variables: {
+          page: parseInt(id)
+        }
+      })
+      commit('CHARACTERS_BY_PAGE', res.data.characters)
     }
   },
   modules: {

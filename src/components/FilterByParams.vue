@@ -1,14 +1,14 @@
 <template>
   <div class="flex justify-center my-5">
-    <input type="text" class="rounded-xl border-green-100 pl-4 outline-none" placeholder="Name" v-model="name"/>
-    <select v-model="gender" class="select">
+    <input type="text" class="rounded-xl border-green-100 pl-4 outline-none" placeholder="Name" v-model="filter.name"/>
+    <select v-model="filter.gender" class="select">
       <option>Gender</option>
       <option>Female</option>
       <option>Male</option>
       <option>Genderless</option>
       <option>unknown</option>
     </select>
-    <select v-model="status" class="select">
+    <select v-model="filter.status" class="select">
       <option>Status</option>
       <option>Dead</option>
       <option>Alive</option>
@@ -34,17 +34,23 @@ import CHARACTERS_FILTERED from "@/graphql/charactersFiltered";
 export default {
   data() {
     return {
-      name: "",
-      gender: "Gender",
-      status: "Status",
-      filter: {}
+      filter: {
+        name: "",
+        gender: "Gender",
+        status: "Status"
+      }
     }
+  },
+  mounted() {
+    this.filter = this.$store.state.filter
   },
   methods: {
     async submit() {
-      if(this.gender !== 'Gender') this.filter.gender = this.gender;
-      if(this.status !== 'Status') this.filter.status = this.status;
-      if(this.name !== '') this.filter.name = this.name;
+      const filterParams = {}
+      if(this.filter.gender !== 'Gender') filterParams.gender = this.filter.gender;
+      if(this.filter.status !== 'Status') filterParams.status = this.filter.status;
+      if(this.filter.name !== '') filterParams.name = this.filter.name;
+      await this.$store.dispatch('storeFilter', filterParams)
       const res = await this.$apollo.query({
         query: CHARACTERS_FILTERED,
         variables: {

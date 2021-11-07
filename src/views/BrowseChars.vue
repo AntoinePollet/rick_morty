@@ -14,7 +14,6 @@
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
 import FilterByParams from "@/components/FilterByParams";
-import CHARACTERS from "@/graphql/characters";
 export default {
   name: 'BrowseChars',
   components: {Characters, ChangePage, FilterByParams},
@@ -24,37 +23,27 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.getCharacters(vm.$route.params.id);
+    next(async vm => {
+      await vm.$store.dispatch('CharactersByPage', vm.$route.params.id);
     })
   },
   methods: {
-    nextPage(page) {
-      this.getCharacters(page);
+    async nextPage(page) {
+      await this.$store.dispatch('CharactersByPage', page);
       this.$router.push({name: 'Characters', params: {id: page}});
     },
-    nextPageJump(page) {
-      this.getCharacters(page);
+    async nextPageJump(page) {
+      await this.$store.dispatch('CharactersByPage', page);
       this.$router.push({name: 'Characters', params: {id: page}});
     },
-    previousPage(page) {
-      this.getCharacters(page);
+    async previousPage(page) {
+      await this.$store.dispatch('CharactersByPage', page);
       this.$router.push({name: 'Characters', params: {id: page}});
     },
-    previousPageJump(page) {
-      this.getCharacters(page);
+    async previousPageJump(page) {
+      await this.$store.dispatch('CharactersByPage', page);
       this.$router.push({name: 'Characters', params: {id: page}});
     },
-    async getCharacters(page) {
-      const res = await this.$apollo.query({
-        query: CHARACTERS,
-        variables:{
-          page: parseInt(page)
-        },
-        update: data => data.characters
-      })
-      await this.$store.dispatch('getPage', res.data.characters);
-    }
   }
 }
 </script>
