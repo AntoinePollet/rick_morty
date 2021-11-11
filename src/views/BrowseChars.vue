@@ -1,6 +1,6 @@
 <template>
   <div class="browse-characters">
-    <FilterByParams></FilterByParams>
+    <FilterByParams @characters-filter="charactersFilter"></FilterByParams>
     <Characters></Characters>
     <ChangePage @previous-page="previousPage"
                 @next-page="nextPage"
@@ -22,27 +22,38 @@ export default {
       characters: {},
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(async vm => {
-      await vm.$store.dispatch('CharactersByPage', vm.$route.params.id);
-    })
+  async created() {
+    try {
+      await this.$store.dispatch('charactersByPage', this.$route.params.id);
+    }
+    catch(err) {
+      console.log(err)
+    }
   },
   methods: {
-    async nextPage(page) {
-      await this.$store.dispatch('CharactersByPage', page);
-      this.$router.push({name: 'Characters', params: {id: page}});
+    async charactersFilter(filter) {
+      console.log(filter)
+      await this.$store.dispatch('charactersFiltered', filter)
     },
-    async nextPageJump(page) {
-      await this.$store.dispatch('CharactersByPage', page);
-      this.$router.push({name: 'Characters', params: {id: page}});
+    async nextPage() {
+      const nextPage = parseInt(this.$route.params.id) +1
+      await this.$store.dispatch('charactersByPage', nextPage);
+      await this.$router.push({name: 'Characters', params: {id: nextPage}});
     },
-    async previousPage(page) {
-      await this.$store.dispatch('CharactersByPage', page);
-      this.$router.push({name: 'Characters', params: {id: page}});
+    async nextPageJump() {
+      const nextPageJump = parseInt(this.$route.params.id) +4
+      await this.$store.dispatch('charactersByPage', nextPageJump);
+      await this.$router.push({name: 'Characters', params: {id: nextPageJump}});
     },
-    async previousPageJump(page) {
-      await this.$store.dispatch('CharactersByPage', page);
-      this.$router.push({name: 'Characters', params: {id: page}});
+    async previousPage() {
+      const previousPage = parseInt(this.$route.params.id) -1
+      await this.$store.dispatch('charactersByPage', previousPage);
+      await this.$router.push({name: 'Characters', params: {id: previousPage}});
+    },
+    async previousPageJump() {
+      const previousPageJump = parseInt(this.$route.params.id) -4
+      await this.$store.dispatch('charactersByPage', previousPageJump);
+      await this.$router.push({name: 'Characters', params: {id: previousPageJump}});
     },
   }
 }

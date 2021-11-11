@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import CHARACTERS_FILTERED from "@/graphql/charactersFiltered";
-
 export default {
   data() {
     return {
@@ -45,19 +43,12 @@ export default {
     this.filter = this.$store.state.filter
   },
   methods: {
-    async submit() {
+    submit() {
       const filterParams = {}
       if(this.filter.gender !== 'Gender') filterParams.gender = this.filter.gender;
       if(this.filter.status !== 'Status') filterParams.status = this.filter.status;
       if(this.filter.name !== '') filterParams.name = this.filter.name;
-      await this.$store.dispatch('storeFilter', filterParams)
-      const res = await this.$apollo.query({
-        query: CHARACTERS_FILTERED,
-        variables: {
-          filter: this.filter
-        }
-      })
-      await this.$store.dispatch('charactersFiltered', res.data.characters)
+      this.$emit('characters-filter', filterParams)
     }
   }
 }

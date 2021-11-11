@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import EPISODES from "@/graphql/episodes";
 import {mapState} from "vuex";
 import Episode from '@/components/Episode'
 import EpisodeInfosModal from "@/components/EpisodeInfosModal"

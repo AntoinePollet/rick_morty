@@ -4,10 +4,10 @@ import CHARACTERS from "@/graphql/characters";
 import EPISODES_COUNT from "@/graphql/episodesCount";
 import EPISODES from "@/graphql/episodes";
 import CHARACTER from "@/graphql/character";
+import CHARACTERS_FILTERED from "@/graphql/charactersFiltered";
 
 export default createStore({
   state: {
-    page: 1,
     episodesCount: null,
     info: {},
     characters: {},
@@ -17,6 +17,14 @@ export default createStore({
       name: "",
       gender: "Gender",
       status: "Status"
+    }
+  },
+  getters: {
+    doesNextPageExist: (state) => {
+      return !!state.info.next
+    },
+    doesNextPageExistTurbo: (state) => (page) => {
+      return (state.info.count - ((page) * 20) > 80);
     }
   },
   mutations: {
@@ -75,23 +83,33 @@ export default createStore({
       })
       commit('EPISODES', res.data.episodesByIds)
     },
-    charactersFiltered({commit}, res) {
-      console.log(res);
-      commit('CHARACTERS_FILTERED', res)
+    async charactersFiltered({commit}, filter) {
+      const res = await apolloClient.query({
+        query: CHARACTERS_FILTERED,
+        variables: {
+          filter: filter
+        }
+      })
+      commit('CHARACTERS_BY_PAGE', res.data.characters)
     },
     async storeFilter({commit}, filter) {
       //console.log(apolloClient)
       console.log(filter)
       commit('STORE_FILTER', filter)
     },
-    async CharactersByPage({commit}, id) {
-      const res = await apolloClient.query({
-        query: CHARACTERS,
-        variables: {
-          page: parseInt(id)
-        }
-      })
-      commit('CHARACTERS_BY_PAGE', res.data.characters)
+    async charactersByPage({commit}, id) {
+      try{
+        const res = await apolloClient.query({
+          query: CHARACTERS,
+          variables: {
+            page: parseInt(id)
+          }
+        })
+        commit('CHARACTERS_BY_PAGE', res.data.characters)
+      } catch (err) {
+        throw new Error(err);
+      }
+
     }
   },
   modules: {

@@ -13,7 +13,8 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['even'],
-      opacity: ['hover']
+      opacity: ['hover',  'disabled'],
+      hover: ['disabled']
     },
   },
   plugins: [],
