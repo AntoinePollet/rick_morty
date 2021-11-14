@@ -1,6 +1,6 @@
 <template>
   <div class="browse-characters">
-    <FilterByParams @characters-filter="charactersFilter"></FilterByParams>
+    <FilterByParams @characters-filter="charactersFilter" @characters-reset="charactersReset"></FilterByParams>
     <Characters></Characters>
     <ChangePage @previous-page="previousPage"
                 @next-page="nextPage"
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Characters from "@/components/Characters";
 import ChangePage from "@/components/ChangePage";
 import FilterByParams from "@/components/FilterByParams";
@@ -19,40 +20,63 @@ export default {
   components: {Characters, ChangePage, FilterByParams},
   data() {
     return {
-      characters: {},
+      characters: {}
     }
   },
   async created() {
     try {
-      await this.$store.dispatch('charactersByPage', this.$route.params.id);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: this.filter,  id: this.$route.params.id
+      });
     }
     catch(err) {
       console.log(err)
     }
   },
+  computed: {
+    ...mapState({
+      filter: state => state.filter
+    })
+  },
   methods: {
-    async charactersFilter(filter) {
-      console.log(filter)
-      await this.$store.dispatch('charactersFiltered', filter)
+    async charactersFilter(payload) {
+      await this.$store.dispatch('storeFilter', payload.filter);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: payload.filter,  id: payload.id
+      });
+      await this.$router.push({name: 'Characters', params: {id: payload.id}});
+    },
+    async charactersReset() {
+      await this.$store.dispatch('resetFilter');
+      await this.$store.dispatch('charactersFiltered', {filter: {}, id: 1});
+      await this.$router.push({name: 'Characters', params: {id: 1}});
     },
     async nextPage() {
       const nextPage = parseInt(this.$route.params.id) +1
-      await this.$store.dispatch('charactersByPage', nextPage);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: this.filter,  id: nextPage
+      });
       await this.$router.push({name: 'Characters', params: {id: nextPage}});
     },
     async nextPageJump() {
       const nextPageJump = parseInt(this.$route.params.id) +4
-      await this.$store.dispatch('charactersByPage', nextPageJump);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: this.filter,  id: nextPageJump
+      });
       await this.$router.push({name: 'Characters', params: {id: nextPageJump}});
     },
     async previousPage() {
       const previousPage = parseInt(this.$route.params.id) -1
-      await this.$store.dispatch('charactersByPage', previousPage);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: this.filter,  id: previousPage
+      });
       await this.$router.push({name: 'Characters', params: {id: previousPage}});
     },
     async previousPageJump() {
       const previousPageJump = parseInt(this.$route.params.id) -4
-      await this.$store.dispatch('charactersByPage', previousPageJump);
+      await this.$store.dispatch('charactersFiltered', {
+        filter: this.filter,  id: previousPageJump
+      });
       await this.$router.push({name: 'Characters', params: {id: previousPageJump}});
     },
   }

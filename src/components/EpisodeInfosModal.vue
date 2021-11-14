@@ -1,14 +1,16 @@
 <template>
   <div v-if="dialog" class="z-10 overflow-auto w-screen h-screen fixed p-20 top-0 left-0 bg-black bg-opacity-40">
     <div class="flex flex-col rounded-xl p-5 bg-white ">
-      <div class="flex justify-between w-full">
-        <p>{{episode.episode}} - {{episode.name}}</p>
-        <div @click="closeDialog" class="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
-            <font-awesome-icon :icon="['fa', 'times']" size="lg"></font-awesome-icon>
+      <div class="bg-green-200 rounded-t-xl p-5">
+        <div class="flex justify-between w-full">
+          <p class="text-green-900 font-bold">{{episode.episode}} - {{episode.name}}</p>
+          <div @click="closeDialog" class="px-3 py-2 hover:bg-white rounded-full cursor-pointer">
+              <font-awesome-icon :icon="['fa', 'times']" size="lg"></font-awesome-icon>
+          </div>
         </div>
-      </div>
-      <div class="my-2">
-        <p class="text-left">Released {{episode.air_date}}</p>
+        <div class="my-2">
+          <p class="text-left">Released {{episode.air_date}}</p>
+        </div>
       </div>
       <p class="text-left my-2">Characters present in this episode :</p>
       <div class="flex flex-wrap">

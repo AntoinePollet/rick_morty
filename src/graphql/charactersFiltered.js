@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-const CHARACTERS_FILTERED = gql`query charactersByPage($filter: FilterCharacter!){
-  characters(filter: $filter) {
+const CHARACTERS_FILTERED = gql`query charactersByPage($filter: FilterCharacter!, $page: Int!){
+  characters(filter: $filter, page: $page) {
     info {
       pages
       count

@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import { apolloClient } from '@/apollo'
-import CHARACTERS from "@/graphql/characters";
 import EPISODES_COUNT from "@/graphql/episodesCount";
 import EPISODES from "@/graphql/episodes";
 import CHARACTER from "@/graphql/character";
@@ -15,8 +14,9 @@ export default createStore({
     episodes: {},
     filter: {
       name: "",
-      gender: "Gender",
-      status: "Status"
+      gender: "",
+      status: "",
+      species: ""
     }
   },
   getters: {
@@ -43,7 +43,16 @@ export default createStore({
       state.characters = res.results;
     },
     STORE_FILTER(state, filter) {
-      state.filter = filter
+      for(let [key, value] of Object.entries(filter)) {
+        if(state.filter[key]) {
+          state.filter[key] = value
+        }
+      }
+    },
+    RESET_FILTER(state) {
+      for(let item in state.filter) {
+        state.filter[item] = ""
+      }
     },
     CHARACTERS_BY_PAGE(state, res) {
       state.info = res.info;
@@ -81,35 +90,23 @@ export default createStore({
           ids: destructuredEpisodesCount
         }
       })
-      commit('EPISODES', res.data.episodesByIds)
+      commit('EPISODES', res.data.episodesByIds);
     },
-    async charactersFiltered({commit}, filter) {
+    async charactersFiltered({commit}, payload) {
       const res = await apolloClient.query({
         query: CHARACTERS_FILTERED,
         variables: {
-          filter: filter
+          filter: payload.filter,
+          page: parseInt(payload.id)
         }
       })
       commit('CHARACTERS_BY_PAGE', res.data.characters)
     },
     async storeFilter({commit}, filter) {
-      //console.log(apolloClient)
-      console.log(filter)
-      commit('STORE_FILTER', filter)
+      commit('STORE_FILTER', filter);
     },
-    async charactersByPage({commit}, id) {
-      try{
-        const res = await apolloClient.query({
-          query: CHARACTERS,
-          variables: {
-            page: parseInt(id)
-          }
-        })
-        commit('CHARACTERS_BY_PAGE', res.data.characters)
-      } catch (err) {
-        throw new Error(err);
-      }
-
+    async resetFilter({commit}) {
+      commit('RESET_FILTER');
     }
   },
   modules: {

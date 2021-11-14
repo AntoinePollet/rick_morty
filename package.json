@@ -19,7 +19,9 @@
     "graphql-tag": "^2.12.5",
     "vue": "^3.0.0",
     "vue-apollo": "^3.0.8",
+    "vue-loader": "^15.9.8",
     "vue-router": "^4.0.0-0",
+    "vue-spinner": "^1.0.4",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
