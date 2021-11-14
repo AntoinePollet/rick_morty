@@ -14,7 +14,9 @@ module.exports = {
     extend: {
       backgroundColor: ['even'],
       opacity: ['hover',  'disabled'],
-      hover: ['disabled']
+      hover: ['disabled'],
+      ringColor: ['hover'],
+      fontWeight: ['hover']
     },
   },
   plugins: [],

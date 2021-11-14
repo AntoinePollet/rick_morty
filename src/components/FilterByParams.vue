@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col sm:justify-center sm:flex-row my-5">
-    <input type="text" class="rounded-xl border-green-100 p-2 mx-2 outline-none sm:my-0" placeholder="Name" v-model="filter.name"/>
+    <input type="text" class="rounded-xl border-green-100 p-2 m-2 outline-none sm:my-0" placeholder="Name" v-model="filter.name"/>
     <select v-model="filter.gender" class="select sm:my-0">
       <option value="" disabled hidden>Gender</option>
       <option>Female</option>
@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  emits: ['characters-filter', 'characters-reset'],
   data() {
     return {
       filter: {

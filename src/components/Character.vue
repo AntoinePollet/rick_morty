@@ -65,15 +65,6 @@ export default {
       showEpisodes: false
     }
   },
-  created() {
-    if(this.character) {
-      console.log(this.character);
-
-    } else {
-
-      console.log(this.character);
-    }
-  },
   computed: {
     ...mapState({
       character: state => state.character

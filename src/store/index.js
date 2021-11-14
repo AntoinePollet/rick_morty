@@ -93,14 +93,19 @@ export default createStore({
       commit('EPISODES', res.data.episodesByIds);
     },
     async charactersFiltered({commit}, payload) {
-      const res = await apolloClient.query({
-        query: CHARACTERS_FILTERED,
-        variables: {
-          filter: payload.filter,
-          page: parseInt(payload.id)
-        }
-      })
-      commit('CHARACTERS_BY_PAGE', res.data.characters)
+      // eslint-disable-next-line no-useless-catch
+      try {
+        const res = await apolloClient.query({
+          query: CHARACTERS_FILTERED,
+          variables: {
+            filter: payload.filter,
+            page: parseInt(payload.id)
+          }
+        })
+        commit('CHARACTERS_BY_PAGE', res.data.characters)
+      } catch (err) {
+        throw err
+      }
     },
     async storeFilter({commit}, filter) {
       commit('STORE_FILTER', filter);

@@ -1,6 +1,10 @@
 <template>
-  <div class="browse-characters">
-    <FilterByParams @characters-filter="charactersFilter" @characters-reset="charactersReset"></FilterByParams>
+  <FilterByParams @characters-filter="charactersFilter" @characters-reset="charactersReset"></FilterByParams>
+  <div v-if="error">
+    <p class="p-5 bg-red-300 rounded-xl text-red-700 font-medium text-xl mx-40 m-auto">No character(s) found with these filters, please try again with other ones</p>
+  </div>
+  <div v-else class="browse-characters">
+    {{error}}
     <Characters></Characters>
     <ChangePage @previous-page="previousPage"
                 @next-page="nextPage"
@@ -20,7 +24,8 @@ export default {
   components: {Characters, ChangePage, FilterByParams},
   data() {
     return {
-      characters: {}
+      characters: {},
+      error: ""
     }
   },
   async created() {
@@ -40,11 +45,16 @@ export default {
   },
   methods: {
     async charactersFilter(payload) {
-      await this.$store.dispatch('storeFilter', payload.filter);
-      await this.$store.dispatch('charactersFiltered', {
-        filter: payload.filter,  id: payload.id
-      });
-      await this.$router.push({name: 'Characters', params: {id: payload.id}});
+      try {
+        await this.$store.dispatch('storeFilter', payload.filter);
+        await this.$store.dispatch('charactersFiltered', {
+          filter: payload.filter,  id: payload.id
+        });
+        this.error = "";
+        await this.$router.push({name: 'Characters', params: {id: payload.id}});
+      } catch (err) {
+        this.error = err.message;
+      }
     },
     async charactersReset() {
       await this.$store.dispatch('resetFilter');
