@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "dist",
+    "site": "rickandmortydiscovery",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
