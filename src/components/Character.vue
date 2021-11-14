@@ -1,7 +1,7 @@
 <template>
   <div v-if="character" class="m-3 py-7 bg-green-100">
     <div class="flex flex-col md:flex-row">
-      <div class="">
+      <div>
         <img class="rounded-full ml-3" height="175" width="175" :src="character.image" :alt="character.name"/>
       </div>
       <div class="md:ml-5 py-5 flex items-center justify-center flex-col">

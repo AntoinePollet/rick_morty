@@ -57,6 +57,7 @@ export default {
       }
     },
     async charactersReset() {
+      this.error = "";
       await this.$store.dispatch('resetFilter');
       await this.$store.dispatch('charactersFiltered', {filter: {}, id: 1});
       await this.$router.push({name: 'Characters', params: {id: 1}});
