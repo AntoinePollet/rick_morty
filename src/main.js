@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import apolloProvider from "@/apollo";
 import './index.css'
-import firebaseConfig from "../firebase";
+import firebaseConfig from "../.firebase/firebase";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleUp, faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
