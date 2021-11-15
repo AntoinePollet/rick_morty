@@ -6,10 +6,10 @@ import apolloProvider from "@/apollo";
 import './index.css'
 import firebaseConfig from "../firebase";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleUp, faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleUp, faAngleDown, faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleDown, faAngleUp, faTimes)
+library.add(faAngleRight, faAngleDoubleRight, faAngleLeft, faAngleDoubleLeft, faAngleDown, faAngleUp, faTimes, faBars)
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
