@@ -1,16 +1,18 @@
 <template>
-  <FilterByParams @characters-filter="charactersFilter" @characters-reset="charactersReset"></FilterByParams>
-  <div v-if="error">
-    <p class="p-5 bg-red-300 rounded-xl text-red-700 font-medium text-xl mx-40 m-auto">No character(s) found with these filters, please try again with other ones</p>
-  </div>
-  <div v-else class="browse-characters">
-    {{error}}
-    <Characters></Characters>
-    <ChangePage @previous-page="previousPage"
-                @next-page="nextPage"
-                @previous-page-jump="previousPageJump"
-                @next-page-jump="nextPageJump"
-    ></ChangePage>
+  <div>
+    <FilterByParams @characters-filter="charactersFilter" @characters-reset="charactersReset"></FilterByParams>
+    <div v-if="error">
+      <p class="p-5 bg-red-300 rounded-xl text-red-700 font-medium text-xl mx-40 m-auto">No character(s) found with these filters, please try again with other ones</p>
+    </div>
+    <div v-else class="browse-characters">
+      {{error}}
+      <Characters></Characters>
+      <ChangePage @previous-page="previousPage"
+                  @next-page="nextPage"
+                  @previous-page-jump="previousPageJump"
+                  @next-page-jump="nextPageJump"
+      ></ChangePage>
+    </div>
   </div>
 </template>
 

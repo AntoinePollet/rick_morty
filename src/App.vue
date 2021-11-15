@@ -1,13 +1,15 @@
 <template>
   <Header></Header>
-  <router-view :key="$route.fullPath"/>
+  <router-view class="min-h-screen" :key="$route.fullPath"/>
+  <Footer></Footer>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 export default {
   name: "App",
-  components: {Header}
+  components: {Header, Footer}
 }
 </script>
 <style lang="scss">
