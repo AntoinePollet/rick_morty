@@ -1,5 +1,5 @@
 <template>
-  <div v-if="dialog" class="z-10 overflow-auto w-screen h-screen fixed p-20 top-0 left-0 bg-black bg-opacity-40">
+  <div v-if="dialog" class="z-10 overflow-auto w-screen h-screen fixed p-4 sm:p-20 top-0 left-0 bg-black bg-opacity-40">
     <div class="flex flex-col rounded-xl p-5 bg-white ">
       <div class="bg-green-200 rounded-t-xl p-5">
         <div class="flex justify-between w-full">

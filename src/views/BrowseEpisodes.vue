@@ -40,9 +40,11 @@ export default {
   },
   methods: {
     closeDialog(bool) {
+      document.body.style.overflowY = "visible";
       this.dialog = bool
     },
     openDialog(episode) {
+      document.body.style.overflowY = "hidden";
       this.dialog = true;
       this.episode = episode
     }
